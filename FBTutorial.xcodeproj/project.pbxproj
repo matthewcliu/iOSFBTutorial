@@ -16,6 +16,17 @@
 		E6EDA9E51767E5DD00D3558A /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = E6EDA9E41767E5DD00D3558A /* Default.png */; };
 		E6EDA9E71767E5DD00D3558A /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E6EDA9E61767E5DD00D3558A /* Default@2x.png */; };
 		E6EDA9E91767E5DD00D3558A /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E6EDA9E81767E5DD00D3558A /* Default-568h@2x.png */; };
+		E6EDA9F01767E67500D3558A /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E6EDA9EF1767E67500D3558A /* FacebookSDK.framework */; };
+		E6EDA9F31767E6A800D3558A /* FacebookSDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = E6EDA9F11767E6A800D3558A /* FacebookSDKResources.bundle */; };
+		E6EDA9F41767E6A800D3558A /* FBUserSettingsViewResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = E6EDA9F21767E6A800D3558A /* FBUserSettingsViewResources.bundle */; };
+		E6EDA9F61767E6C300D3558A /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E6EDA9F51767E6C300D3558A /* AdSupport.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		E6EDA9F81767E6CB00D3558A /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E6EDA9F71767E6CB00D3558A /* Accounts.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		E6EDA9FA1767E6D500D3558A /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E6EDA9F91767E6D500D3558A /* libsqlite3.dylib */; settings = {ATTRIBUTES = (Weak, ); }; };
+		E6EDA9FC1767E6DC00D3558A /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E6EDA9FB1767E6DC00D3558A /* Security.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		E6EDA9FE1767E6E300D3558A /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E6EDA9FD1767E6E300D3558A /* Social.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		E6EDAA021767F69300D3558A /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = E6EDA9FF1767F69300D3558A /* Icon-72.png */; };
+		E6EDAA031767F69300D3558A /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = E6EDAA001767F69300D3558A /* Icon.png */; };
+		E6EDAA041767F69300D3558A /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E6EDAA011767F69300D3558A /* Icon@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +43,17 @@
 		E6EDA9E41767E5DD00D3558A /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		E6EDA9E61767E5DD00D3558A /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		E6EDA9E81767E5DD00D3558A /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		E6EDA9EF1767E67500D3558A /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FacebookSDK.framework; sourceTree = "<group>"; };
+		E6EDA9F11767E6A800D3558A /* FacebookSDKResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = FacebookSDKResources.bundle; path = FacebookSDK.framework/Versions/A/Resources/FacebookSDKResources.bundle; sourceTree = "<group>"; };
+		E6EDA9F21767E6A800D3558A /* FBUserSettingsViewResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = FBUserSettingsViewResources.bundle; path = FacebookSDK.framework/Versions/A/Resources/FBUserSettingsViewResources.bundle; sourceTree = "<group>"; };
+		E6EDA9F51767E6C300D3558A /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
+		E6EDA9F71767E6CB00D3558A /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
+		E6EDA9F91767E6D500D3558A /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		E6EDA9FB1767E6DC00D3558A /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		E6EDA9FD1767E6E300D3558A /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
+		E6EDA9FF1767F69300D3558A /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72.png"; sourceTree = "<group>"; };
+		E6EDAA001767F69300D3558A /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
+		E6EDAA011767F69300D3558A /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -39,9 +61,15 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E6EDA9FE1767E6E300D3558A /* Social.framework in Frameworks */,
+				E6EDA9FC1767E6DC00D3558A /* Security.framework in Frameworks */,
+				E6EDA9FA1767E6D500D3558A /* libsqlite3.dylib in Frameworks */,
+				E6EDA9F81767E6CB00D3558A /* Accounts.framework in Frameworks */,
+				E6EDA9F61767E6C300D3558A /* AdSupport.framework in Frameworks */,
 				E6EDA9D31767E5DD00D3558A /* UIKit.framework in Frameworks */,
 				E6EDA9D51767E5DD00D3558A /* Foundation.framework in Frameworks */,
 				E6EDA9D71767E5DD00D3558A /* CoreGraphics.framework in Frameworks */,
+				E6EDA9F01767E67500D3558A /* FacebookSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -68,6 +96,14 @@
 		E6EDA9D11767E5DD00D3558A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E6EDA9FD1767E6E300D3558A /* Social.framework */,
+				E6EDA9FB1767E6DC00D3558A /* Security.framework */,
+				E6EDA9F91767E6D500D3558A /* libsqlite3.dylib */,
+				E6EDA9F71767E6CB00D3558A /* Accounts.framework */,
+				E6EDA9F51767E6C300D3558A /* AdSupport.framework */,
+				E6EDA9F11767E6A800D3558A /* FacebookSDKResources.bundle */,
+				E6EDA9F21767E6A800D3558A /* FBUserSettingsViewResources.bundle */,
+				E6EDA9EF1767E67500D3558A /* FacebookSDK.framework */,
 				E6EDA9D21767E5DD00D3558A /* UIKit.framework */,
 				E6EDA9D41767E5DD00D3558A /* Foundation.framework */,
 				E6EDA9D61767E5DD00D3558A /* CoreGraphics.framework */,
@@ -88,6 +124,9 @@
 		E6EDA9D91767E5DD00D3558A /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				E6EDA9FF1767F69300D3558A /* Icon-72.png */,
+				E6EDAA001767F69300D3558A /* Icon.png */,
+				E6EDAA011767F69300D3558A /* Icon@2x.png */,
 				E6EDA9DA1767E5DD00D3558A /* FBTutorial-Info.plist */,
 				E6EDA9DB1767E5DD00D3558A /* InfoPlist.strings */,
 				E6EDA9DE1767E5DD00D3558A /* main.m */,
@@ -154,6 +193,11 @@
 				E6EDA9E51767E5DD00D3558A /* Default.png in Resources */,
 				E6EDA9E71767E5DD00D3558A /* Default@2x.png in Resources */,
 				E6EDA9E91767E5DD00D3558A /* Default-568h@2x.png in Resources */,
+				E6EDA9F31767E6A800D3558A /* FacebookSDKResources.bundle in Resources */,
+				E6EDA9F41767E6A800D3558A /* FBUserSettingsViewResources.bundle in Resources */,
+				E6EDAA021767F69300D3558A /* Icon-72.png in Resources */,
+				E6EDAA031767F69300D3558A /* Icon.png in Resources */,
+				E6EDAA041767F69300D3558A /* Icon@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -242,6 +286,10 @@
 		E6EDA9ED1767E5DD00D3558A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "FBTutorial/FBTutorial-Prefix.pch";
 				INFOPLIST_FILE = "FBTutorial/FBTutorial-Info.plist";
@@ -253,6 +301,10 @@
 		E6EDA9EE1767E5DD00D3558A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "FBTutorial/FBTutorial-Prefix.pch";
 				INFOPLIST_FILE = "FBTutorial/FBTutorial-Info.plist";
