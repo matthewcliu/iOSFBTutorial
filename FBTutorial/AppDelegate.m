@@ -14,8 +14,8 @@
 
 @implementation AppDelegate
 
-@synthesize navController = _navController;
-@synthesize mainViewController = _mainViewController;
+@synthesize navController;
+@synthesize mainViewController;
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -23,13 +23,24 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     
-    SCViewController *mainViewController = [[SCViewController alloc] initWithNibName:@"SCViewController" bundle:nil];
-    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:mainViewController];
+    mainViewController = [[SCViewController alloc] initWithNibName:@"SCViewController" bundle:nil];
+    navController = [[UINavigationController alloc] initWithRootViewController:mainViewController];
     
     [[self window] setRootViewController:navController];
     
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
+    
+    
+    NSLog(@"Session state: %u", [[FBSession activeSession] state]);
+    //Check to see if the app has a valid token for the current state
+    if ([[FBSession activeSession] state] == FBSessionStateCreatedTokenLoaded) {
+        //To do - show logged in view
+    } else {
+        //Display the login page instead
+        [self showLoginView];
+    }
+    
     return YES;
 }
 
@@ -58,6 +69,20 @@
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+//Facebook Authentication
+- (void)showLoginView
+{
+    //Grab a pointer to the top most view controller
+    UIViewController *topViewController = [navController topViewController];
+    
+    NSLog(@"The Navigation Controller is: %@", navController);
+    NSLog(@"the topViewController is: %@", topViewController);
+    
+    SCLoginViewController *loginViewController = [[SCLoginViewController alloc] initWithNibName:@"SCLoginViewController" bundle:nil];
+    [topViewController presentViewController:loginViewController animated:NO completion:nil];
+    NSLog(@"Attempted to run presentViewController");
 }
 
 @end

@@ -14,4 +14,6 @@
 @property (strong, nonatomic) UINavigationController *navController;
 @property (strong, nonatomic) UIViewController *mainViewController;
 
+- (void)showLoginView;
+
 @end
