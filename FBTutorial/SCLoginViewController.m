@@ -7,6 +7,8 @@
 //
 
 #import "SCLoginViewController.h"
+
+//Note import of AppDelegate so that performLogin can request a new FB session to be opened
 #import "AppDelegate.h"
 
 @interface SCLoginViewController ()
@@ -41,12 +43,17 @@
     // Dispose of any resources that can be recreated.
 }
 
+//Called from AppDelegate
 - (IBAction)performLogin:(id)sender
 {
+    //Turns on activity spinner in the view - non-critical
     [[self spinner] startAnimating];
     
+    //Grab a pointer to the appDelegate that is capable of accessing FBSession and opening a session
     AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
     NSLog(@"appDelegate from login is: %@", appDelegate);
+
+    //Send message to application delegate to open a new session
     [appDelegate openSession];
 }
 
