@@ -46,6 +46,7 @@
     [[self spinner] startAnimating];
     
     AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
+    NSLog(@"appDelegate from login is: %@", appDelegate);
     [appDelegate openSession];
 }
 

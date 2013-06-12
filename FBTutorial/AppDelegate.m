@@ -86,11 +86,13 @@
     if (![presentedViewController isKindOfClass:[SCLoginViewController class]]) {
         SCLoginViewController *loginViewController = [[SCLoginViewController alloc] initWithNibName:@"SCLoginViewController" bundle:nil];
         [topViewController presentViewController:loginViewController animated:NO completion:nil];
-        NSLog(@"Attempted to run presentViewController");
+        NSLog(@"Login view controller presented");
 
     } else {
         SCLoginViewController *loginViewController = (SCLoginViewController *)presentedViewController;
+        NSLog(@"About call loginFailed");
         [loginViewController loginFailed];
+
     }
     
 }
@@ -99,6 +101,9 @@
                       state:(FBSessionState)state
                       error:(NSError *)error
 {
+    
+    NSLog(@"Session state is: %u", state);
+    
     switch (state) {
         case FBSessionStateOpen:
         {
@@ -129,17 +134,20 @@
 
 - (void)openSession
 {
+    NSLog(@"openSession called");
     [FBSession openActiveSessionWithReadPermissions:nil
                                        allowLoginUI:YES
                                   completionHandler:^(FBSession *session,
                                                       FBSessionState state, NSError *error) {
         [self sessionStateChanged:session state:state error:error];
+                                      NSLog(@"Block variables - session: %@, state: %u, error: %@", session, state, error);
     }];
 }
 
 //Handles callback from mobile web browser that logs user in
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
 {
+    NSLog(@"Callback URL is: %@", url);
     return [[FBSession activeSession] handleOpenURL:url];
 }
 
