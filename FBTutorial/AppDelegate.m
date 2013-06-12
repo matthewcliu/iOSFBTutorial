@@ -7,13 +7,27 @@
 //
 
 #import "AppDelegate.h"
+#import <FacebookSDK/FacebookSDK.h>
+
+#import "SCLoginViewController.h"
+#import "SCViewController.h"
 
 @implementation AppDelegate
+
+@synthesize navController = _navController;
+@synthesize mainViewController = _mainViewController;
+
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
+    
+    SCViewController *mainViewController = [[SCViewController alloc] initWithNibName:@"SCViewController" bundle:nil];
+    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:mainViewController];
+    
+    [[self window] setRootViewController:navController];
+    
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     return YES;

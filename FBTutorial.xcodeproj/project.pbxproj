@@ -27,6 +27,10 @@
 		E6EDAA021767F69300D3558A /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = E6EDA9FF1767F69300D3558A /* Icon-72.png */; };
 		E6EDAA031767F69300D3558A /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = E6EDAA001767F69300D3558A /* Icon.png */; };
 		E6EDAA041767F69300D3558A /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E6EDAA011767F69300D3558A /* Icon@2x.png */; };
+		E6EDAA081767F77600D3558A /* SCLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E6EDAA061767F77600D3558A /* SCLoginViewController.m */; };
+		E6EDAA091767F77600D3558A /* SCLoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E6EDAA071767F77600D3558A /* SCLoginViewController.xib */; };
+		E6EDAA0D1767FD0E00D3558A /* SCViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E6EDAA0B1767FD0D00D3558A /* SCViewController.m */; };
+		E6EDAA0E1767FD0E00D3558A /* SCViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E6EDAA0C1767FD0D00D3558A /* SCViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -54,6 +58,12 @@
 		E6EDA9FF1767F69300D3558A /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72.png"; sourceTree = "<group>"; };
 		E6EDAA001767F69300D3558A /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		E6EDAA011767F69300D3558A /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
+		E6EDAA051767F77600D3558A /* SCLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCLoginViewController.h; sourceTree = "<group>"; };
+		E6EDAA061767F77600D3558A /* SCLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCLoginViewController.m; sourceTree = "<group>"; };
+		E6EDAA071767F77600D3558A /* SCLoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SCLoginViewController.xib; sourceTree = "<group>"; };
+		E6EDAA0A1767FD0D00D3558A /* SCViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCViewController.h; sourceTree = "<group>"; };
+		E6EDAA0B1767FD0D00D3558A /* SCViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCViewController.m; sourceTree = "<group>"; };
+		E6EDAA0C1767FD0D00D3558A /* SCViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SCViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -116,6 +126,12 @@
 			children = (
 				E6EDA9E11767E5DD00D3558A /* AppDelegate.h */,
 				E6EDA9E21767E5DD00D3558A /* AppDelegate.m */,
+				E6EDAA0A1767FD0D00D3558A /* SCViewController.h */,
+				E6EDAA0B1767FD0D00D3558A /* SCViewController.m */,
+				E6EDAA0C1767FD0D00D3558A /* SCViewController.xib */,
+				E6EDAA051767F77600D3558A /* SCLoginViewController.h */,
+				E6EDAA061767F77600D3558A /* SCLoginViewController.m */,
+				E6EDAA071767F77600D3558A /* SCLoginViewController.xib */,
 				E6EDA9D91767E5DD00D3558A /* Supporting Files */,
 			);
 			path = FBTutorial;
@@ -198,6 +214,8 @@
 				E6EDAA021767F69300D3558A /* Icon-72.png in Resources */,
 				E6EDAA031767F69300D3558A /* Icon.png in Resources */,
 				E6EDAA041767F69300D3558A /* Icon@2x.png in Resources */,
+				E6EDAA091767F77600D3558A /* SCLoginViewController.xib in Resources */,
+				E6EDAA0E1767FD0E00D3558A /* SCViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -210,6 +228,8 @@
 			files = (
 				E6EDA9DF1767E5DD00D3558A /* main.m in Sources */,
 				E6EDA9E31767E5DD00D3558A /* AppDelegate.m in Sources */,
+				E6EDAA081767F77600D3558A /* SCLoginViewController.m in Sources */,
+				E6EDAA0D1767FD0E00D3558A /* SCViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
