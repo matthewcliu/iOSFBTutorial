@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <FacebookSDK/FacebookSDK.h>
 
-@interface SCViewController : UIViewController
+
+//Add protocol declarations since the view controller has a table view and a FBFriendPicker
+@interface SCViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, FBFriendPickerDelegate>
 
 @end
