@@ -12,6 +12,8 @@
 #import "SCLoginViewController.h"
 #import "SCViewController.h"
 
+NSString *const SCSessionStateChangedNotification = @"com.unicyclelabs.FBTutorial:SCSessionStateChangedNotification";
+
 @implementation AppDelegate
 
 @synthesize navController;
@@ -23,7 +25,8 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     
-
+    //Necessary for XIB files to recognize this class
+    [FBProfilePictureView class];
     
     mainViewController = [[SCViewController alloc] initWithNibName:@"SCViewController" bundle:nil];
     navController = [[UINavigationController alloc] initWithRootViewController:mainViewController];
@@ -125,6 +128,8 @@
         default:
             break;
     }
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:SCSessionStateChangedNotification object:session];
     
     if (error) {
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:[error localizedDescription] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];

@@ -8,8 +8,12 @@
 
 #import "SCViewController.h"
 #import <FacebookSDK/FacebookSDK.h>
+#import "AppDelegate.h"
 
 @interface SCViewController ()
+
+@property (weak, nonatomic) IBOutlet FBProfilePictureView *userProfileImage;
+@property (weak, nonatomic) IBOutlet UILabel *userNameLabel;
 
 @end
 
@@ -31,17 +35,44 @@
     
     //Add FB logout button
     [self navigationItem].rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Logout" style:UIBarButtonItemStyleBordered target:self action:@selector(logoutButtonWasPressed:)];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sessionStateChanged:) name:SCSessionStateChangedNotification object:nil];
 }
 
-- (void)didReceiveMemoryWarning
+- (void)viewDidUnload
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    if ([[FBSession activeSession] isOpen]) {
+        [self populateUserDetails];
+    }
+}
+
+- (void)sessionStateChanged:(NSNotification *)notification
+{
+    [self populateUserDetails];
 }
 
 - (void)logoutButtonWasPressed:(id)sender
 {
     [[FBSession activeSession] closeAndClearTokenInformation];
+}
+
+- (void)populateUserDetails
+{
+    if([[FBSession activeSession] isOpen]) {
+        [[FBRequest requestForMe] startWithCompletionHandler:^(FBRequestConnection *connection, NSDictionary<FBGraphUser> *user, NSError *error)  {
+            if (!error){
+                [[self userNameLabel] setText:[user name]];
+                [[self userProfileImage] setProfileID: [user id]];
+            }
+        }];
+    }
 }
 
 @end
