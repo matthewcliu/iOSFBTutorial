@@ -23,6 +23,8 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     
+
+    
     mainViewController = [[SCViewController alloc] initWithNibName:@"SCViewController" bundle:nil];
     navController = [[UINavigationController alloc] initWithRootViewController:mainViewController];
     
@@ -31,13 +33,14 @@
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     
-    
     NSLog(@"Session state: %u", [[FBSession activeSession] state]);
+    
     //Check to see if the app has a valid token for the current state
     if ([[FBSession activeSession] state] == FBSessionStateCreatedTokenLoaded) {
-        //To do - show logged in view
+        //User is logged in
+        [self openSession];
     } else {
-        //Display the login page instead
+        //Display the login page
         [self showLoginView];
     }
     
@@ -77,12 +80,67 @@
     //Grab a pointer to the top most view controller
     UIViewController *topViewController = [navController topViewController];
     
-    NSLog(@"The Navigation Controller is: %@", navController);
-    NSLog(@"the topViewController is: %@", topViewController);
+    //Grab a pointer to the presented view controller
+    UIViewController *presentedViewController = [topViewController presentedViewController];
     
-    SCLoginViewController *loginViewController = [[SCLoginViewController alloc] initWithNibName:@"SCLoginViewController" bundle:nil];
-    [topViewController presentViewController:loginViewController animated:NO completion:nil];
-    NSLog(@"Attempted to run presentViewController");
+    if (![presentedViewController isKindOfClass:[SCLoginViewController class]]) {
+        SCLoginViewController *loginViewController = [[SCLoginViewController alloc] initWithNibName:@"SCLoginViewController" bundle:nil];
+        [topViewController presentViewController:loginViewController animated:NO completion:nil];
+        NSLog(@"Attempted to run presentViewController");
+
+    } else {
+        SCLoginViewController *loginViewController = (SCLoginViewController *)presentedViewController;
+        [loginViewController loginFailed];
+    }
+    
+}
+
+- (void)sessionStateChanged:(FBSession *)session
+                      state:(FBSessionState)state
+                      error:(NSError *)error
+{
+    switch (state) {
+        case FBSessionStateOpen:
+        {
+            UIViewController *topViewController = [[self navController] topViewController];
+            if ([[topViewController presentedViewController] isKindOfClass:[SCLoginViewController class]]) {
+                [topViewController dismissViewControllerAnimated:YES completion:nil];
+            }
+        }
+            break;
+            
+        case FBSessionStateClosed:
+        case FBSessionStateClosedLoginFailed:
+        {
+            //Once the user has logged in, we want them to be looking at the root view
+            [[self navController] popToRootViewControllerAnimated:NO];
+            [FBSession.activeSession closeAndClearTokenInformation];
+            [self showLoginView];
+        }
+        default:
+            break;
+    }
+    
+    if (error) {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:[error localizedDescription] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [alertView show];
+    }
+}
+
+- (void)openSession
+{
+    [FBSession openActiveSessionWithReadPermissions:nil
+                                       allowLoginUI:YES
+                                  completionHandler:^(FBSession *session,
+                                                      FBSessionState state, NSError *error) {
+        [self sessionStateChanged:session state:state error:error];
+    }];
+}
+
+//Handles callback from mobile web browser that logs user in
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
+{
+    return [[FBSession activeSession] handleOpenURL:url];
 }
 
 @end

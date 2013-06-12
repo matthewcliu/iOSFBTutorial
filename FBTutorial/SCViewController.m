@@ -7,6 +7,7 @@
 //
 
 #import "SCViewController.h"
+#import <FacebookSDK/FacebookSDK.h>
 
 @interface SCViewController ()
 
@@ -27,12 +28,20 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    
+    //Add FB logout button
+    [self navigationItem].rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Logout" style:UIBarButtonItemStyleBordered target:self action:@selector(logoutButtonWasPressed:)];
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)logoutButtonWasPressed:(id)sender
+{
+    [[FBSession activeSession] closeAndClearTokenInformation];
 }
 
 @end

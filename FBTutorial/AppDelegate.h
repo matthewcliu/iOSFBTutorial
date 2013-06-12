@@ -15,5 +15,6 @@
 @property (strong, nonatomic) UIViewController *mainViewController;
 
 - (void)showLoginView;
+- (void)openSession;
 
 @end
