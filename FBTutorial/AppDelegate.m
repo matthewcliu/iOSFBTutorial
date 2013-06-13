@@ -117,7 +117,9 @@ NSString *const SCSessionStateChangedNotification = @"com.unicyclelabs.FBTutoria
     
     //Generate a completion handler to pass to below method back during session opening
     //Permissions can be set below
-    [FBSession openActiveSessionWithReadPermissions:nil
+    NSArray *permissions = [NSArray arrayWithObjects:@"user_photos", nil];
+    
+    [FBSession openActiveSessionWithReadPermissions:permissions
                                        allowLoginUI:YES
                                   completionHandler:^(FBSession *session,
                                                       FBSessionState state, NSError *error) {

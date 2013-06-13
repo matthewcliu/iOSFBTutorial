@@ -41,6 +41,7 @@
 		E6C2C8E21769A78C002300C4 /* SCMealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCMealViewController.h; sourceTree = "<group>"; };
 		E6C2C8E31769A78C002300C4 /* SCMealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCMealViewController.m; sourceTree = "<group>"; };
 		E6C2C8E41769A78C002300C4 /* SCMealViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SCMealViewController.xib; sourceTree = "<group>"; };
+		E6C2C8E7176A33D7002300C4 /* SCProtocols.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCProtocols.h; sourceTree = "<group>"; };
 		E6EDA9CF1767E5DD00D3558A /* FBTutorial.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FBTutorial.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E6EDA9D21767E5DD00D3558A /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		E6EDA9D41767E5DD00D3558A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -144,6 +145,7 @@
 				E6EDAA051767F77600D3558A /* SCLoginViewController.h */,
 				E6EDAA061767F77600D3558A /* SCLoginViewController.m */,
 				E6EDAA071767F77600D3558A /* SCLoginViewController.xib */,
+				E6C2C8E7176A33D7002300C4 /* SCProtocols.h */,
 				E6EDA9D91767E5DD00D3558A /* Supporting Files */,
 			);
 			path = FBTutorial;

@@ -10,6 +10,9 @@
 #import "AppDelegate.h"
 #import "SCMealViewController.h"
 
+#import "SCProtocols.h"
+#import <FacebookSDK/FBRequest.h>
+
 @interface SCViewController ()
 
 //Create new property using FB class for profile picture (subclass of UIImage)
@@ -36,6 +39,11 @@
 @property (strong, nonatomic) UIImage *selectedPhoto;
 @property (strong, nonatomic) UIPopoverController *popover;
 
+//Publish Action button
+@property (weak, nonatomic) IBOutlet UIButton *announceButton;
+- (IBAction)announce:(id)sender;
+
+
 @end
 
 @implementation SCViewController
@@ -55,6 +63,8 @@
 @synthesize imagePicker;
 @synthesize selectedPhoto;
 @synthesize popover;
+
+@synthesize announceButton;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -360,6 +370,8 @@
     [self updateCellIndex:2 withSubtitle:friendsSubtitle];
     [self updateCellIndex:3 withSubtitle: selectedPhoto ? @"Ready" : @"Take one"];
     
+    [announceButton setEnabled:(selectedMeal != nil)];
+    
 }
 
 - (void)updateCellIndex:(int)index withSubtitle:(NSString *)subtitle
@@ -397,6 +409,122 @@
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
 {
     NSLog(@"%@", error);
+}
+
+
+//Pushing to OG
+
+//This method generates an Open Graph URL for POST using the PHP page - in practice this is not how you would do it
+- (id<SCOGMeal>)mealObjectForMeal:(NSString *)meal
+{
+    //Backend heroku URL
+    NSString * format = @"https://immense-atoll-7280.herokuapp.com/?fb:app_id=527383000662832&og:type=%@&og:title=%@&og:description=%@&&og:image=https://fbcdn-profile-a.akamaihd.net/hprofile-ak-prn1/c35.34.434.434/s160x160/19850_663333582023_942791_n.jpg&body=%@";
+    
+    //Creat a FBGraphObject and treat it as a SCOGMeal with typed properties
+    id<SCOGMeal> result = (id<SCOGMeal>)[FBGraphObject graphObject];
+    
+    //Give it a URL that will echo back the name of the meal as its title, description, and body
+    
+    [result setUrl: [NSString stringWithFormat:format, @"unicycleprototype:meal", meal, meal, meal]];
+    
+    return result;
+    
+}
+
+- (void)postPhotoThenOpenGraphAction
+{
+    FBRequestConnection *connection = [[FBRequestConnection alloc] init];
+    
+    //First request uploads the photo
+    FBRequest *request1 = [FBRequest requestForUploadPhoto:selectedPhoto];
+    [connection addRequest:request1 completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
+        if (!error) {
+            
+        }
+    }
+        batchEntryName:@"photopost"
+    ];
+    
+    //Second request retrieves photo information for just-created photo so we can grab its source
+    FBRequest *request2 = [FBRequest requestForGraphPath:@"{result=photopost:$.id}"];
+    [connection addRequest:request2 completionHandler:^(FBRequestConnection *connection, id result, NSError * error) {
+        if (!error && result) {
+            NSString *source = [result objectForKey:@"source"];
+            [self postOpenGraphActionWithPhotoURL:source];
+        }
+    }
+    ];
+    
+    [connection start];
+}
+
+//User defined method
+- (void)postOpenGraphActionWithPhotoURL:(NSString *)photoURL
+{
+    //First create the Open Graph meal object for the meal we ate
+    id<SCOGMeal> mealObject = [self mealObjectForMeal:selectedMeal];
+    
+    //Now create an Open Graph eat action with the meal, our location, and the people we were with.
+    id<SCOGeatMealAction> action = (id<SCOGeatMealAction>)[FBGraphObject graphObject];
+    
+    //Where is this coming from? Unclear where this is being defined in protocol file
+    [action setMeal:mealObject];
+    
+    //setPlace, setTags, and setImage are defined by FBGraphObject so are inherited into our mealObject
+    if(selectedPlace) {
+        [action setPlace:selectedPlace];
+    }
+    
+    if ([selectedFriends count] > 0) {
+        [action setTags:selectedFriends];
+    }
+    
+    if (photoURL) {
+        NSMutableDictionary *image = [[NSMutableDictionary alloc] init];
+        [image setObject:photoURL forKey:@"url"];
+        
+        NSMutableArray *images = [[NSMutableArray alloc] init];
+        [images addObject:image];
+        
+        [action setImage:images];
+    }
+    
+    //Then create the request and post the action to the "me/<unicycleprototype:eat" path
+    
+    //Logging code
+    [FBSettings setLoggingBehavior:[NSSet
+                                    setWithObjects:FBLoggingBehaviorFBRequests,
+                                    FBLoggingBehaviorFBURLConnections,
+                                    nil]];
+    
+    [FBRequestConnection startForPostWithGraphPath:@"me/unicycleprototype:eat" graphObject:action completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
+        NSString *alertText;
+        if (!error) {
+            alertText = [NSString stringWithFormat:@"Posted Open Graph action, id: %@", [result objectForKey:@"id"]];
+        } else {
+            alertText = [NSString stringWithFormat:@"error: domain = %@, code = %d", [error domain], [error code]];
+        }
+        [[[UIAlertView alloc] initWithTitle:@"Result" message:alertText delegate:nil cancelButtonTitle:@"Thanks!" otherButtonTitles:nil] show];
+    }
+    ];
+}
+
+- (IBAction)announce:(id)sender
+{
+    if ([[[FBSession activeSession] permissions] indexOfObject:@"publish_actions"] == NSNotFound) {
+        
+        [[FBSession activeSession] requestNewPublishPermissions:[NSArray arrayWithObject:@"publish_actions"] defaultAudience:FBSessionDefaultAudienceFriends completionHandler: ^(FBSession *session, NSError *error) {
+            if (!error) {
+                [self announce:sender];
+            }
+        }];
+    } else {
+        if (selectedPhoto) {
+            [self postPhotoThenOpenGraphAction];
+        } else {
+            [self postOpenGraphActionWithPhotoURL:nil];
+        }
+    }
 }
 
 @end
