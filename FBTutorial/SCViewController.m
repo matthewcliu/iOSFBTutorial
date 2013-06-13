@@ -8,6 +8,7 @@
 
 #import "SCViewController.h"
 #import "AppDelegate.h"
+#import "SCMealViewController.h"
 
 @interface SCViewController ()
 
@@ -26,6 +27,15 @@
 @property (strong, nonatomic) FBPlacePickerViewController *placePickerController;
 @property (strong, nonatomic) NSObject<FBGraphPlace> *selectedPlace;
 
+//Instance variables for meals
+@property (strong, nonatomic) SCMealViewController *mealViewController;
+@property (strong, nonatomic) NSString *selectedMeal;
+
+//Image picker
+@property (strong, nonatomic) UIImagePickerController *imagePicker;
+@property (strong, nonatomic) UIImage *selectedPhoto;
+@property (strong, nonatomic) UIPopoverController *popover;
+
 @end
 
 @implementation SCViewController
@@ -38,6 +48,13 @@
 
 @synthesize placePickerController;
 @synthesize selectedPlace;
+
+@synthesize mealViewController;
+@synthesize selectedMeal;
+
+@synthesize imagePicker;
+@synthesize selectedPhoto;
+@synthesize popover;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -79,6 +96,8 @@
     [self setFriendPickerController: nil];
     [self setPlacePickerController:nil];
     [locationManager setDelegate:nil];
+    imagePicker = nil;
+    popover = nil;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -199,6 +218,22 @@
 {
     switch ([indexPath row]) {
         
+        case 0:
+            
+            if (!mealViewController) {
+                __block SCViewController *myself = self;
+                mealViewController = [[SCMealViewController alloc] initWithNibName:@"SCMealViewController" bundle:nil];
+                
+                [mealViewController setSelectItemCallback:^(id sender, id selectedItem)  {
+                    [myself setSelectedMeal: selectedItem];
+                    [myself updateSelections];
+                    
+                }];
+            }
+            [[self navigationController] pushViewController:mealViewController animated:YES];
+            
+            break;
+            
         case 1:
             if (!placePickerController) {
                 placePickerController = [[FBPlacePickerViewController alloc] initWithNibName:nil bundle:nil];
@@ -233,6 +268,29 @@
             [[self navigationController] pushViewController:friendPickerController animated:YES ];
             
             break;
+        
+        case 3:
+            if (!imagePicker) {
+                imagePicker = [[UIImagePickerController alloc] init];
+                [imagePicker setDelegate:self];
+                
+                //Only allow camera roll for this demo
+                [imagePicker setSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
+            }
+            
+            if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+                // Can't use presentModalViewController for image picker on iPad
+                if (!popover) {
+                    popover = [[UIPopoverController alloc] initWithContentViewController:imagePicker];
+                }
+                
+                CGRect rect = [tableView rectForRowAtIndexPath:indexPath];
+                [popover presentPopoverFromRect:rect inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+            } else {
+                [self presentViewController:imagePicker animated:true completion:nil];
+            }
+            
+            break;
             
         default:
             break;
@@ -263,6 +321,21 @@
     }
 }
 
+//Imagepicker delegate
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    selectedPhoto = [info objectForKey:UIImagePickerControllerOriginalImage];
+    
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        [popover dismissPopoverAnimated:YES];
+    } else {
+        [self dismissViewControllerAnimated:TRUE completion:nil];
+    }
+    
+    [self updateSelections];
+}
+
 - (void)updateSelections
 {
     NSString *friendsSubtitle = @"Select friends";
@@ -282,8 +355,10 @@
         friendsSubtitle = [NSString stringWithFormat:@"%@ ", [friend name]];
     }
     
+    [self updateCellIndex:0 withSubtitle: selectedMeal ? selectedMeal : @"Select One"];
     [self updateCellIndex:1 withSubtitle: selectedPlace ? [selectedPlace name] : @"Select One"];
     [self updateCellIndex:2 withSubtitle:friendsSubtitle];
+    [self updateCellIndex:3 withSubtitle: selectedPhoto ? @"Ready" : @"Take one"];
     
 }
 
@@ -297,6 +372,7 @@
 - (void)dealloc
 {
     [friendPickerController setDelegate:nil];
+    [imagePicker setDelegate:nil];
 }
 
 //locationManager delegate methods

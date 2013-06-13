@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		E6C2C8E117693638002300C4 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E6C2C8E017693638002300C4 /* CoreLocation.framework */; };
+		E6C2C8E51769A78C002300C4 /* SCMealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E6C2C8E31769A78C002300C4 /* SCMealViewController.m */; };
+		E6C2C8E61769A78C002300C4 /* SCMealViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E6C2C8E41769A78C002300C4 /* SCMealViewController.xib */; };
 		E6EDA9D31767E5DD00D3558A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E6EDA9D21767E5DD00D3558A /* UIKit.framework */; };
 		E6EDA9D51767E5DD00D3558A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E6EDA9D41767E5DD00D3558A /* Foundation.framework */; };
 		E6EDA9D71767E5DD00D3558A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E6EDA9D61767E5DD00D3558A /* CoreGraphics.framework */; };
@@ -36,6 +38,9 @@
 
 /* Begin PBXFileReference section */
 		E6C2C8E017693638002300C4 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		E6C2C8E21769A78C002300C4 /* SCMealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCMealViewController.h; sourceTree = "<group>"; };
+		E6C2C8E31769A78C002300C4 /* SCMealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCMealViewController.m; sourceTree = "<group>"; };
+		E6C2C8E41769A78C002300C4 /* SCMealViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SCMealViewController.xib; sourceTree = "<group>"; };
 		E6EDA9CF1767E5DD00D3558A /* FBTutorial.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FBTutorial.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E6EDA9D21767E5DD00D3558A /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		E6EDA9D41767E5DD00D3558A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -133,6 +138,9 @@
 				E6EDAA0A1767FD0D00D3558A /* SCViewController.h */,
 				E6EDAA0B1767FD0D00D3558A /* SCViewController.m */,
 				E6EDAA0C1767FD0D00D3558A /* SCViewController.xib */,
+				E6C2C8E21769A78C002300C4 /* SCMealViewController.h */,
+				E6C2C8E31769A78C002300C4 /* SCMealViewController.m */,
+				E6C2C8E41769A78C002300C4 /* SCMealViewController.xib */,
 				E6EDAA051767F77600D3558A /* SCLoginViewController.h */,
 				E6EDAA061767F77600D3558A /* SCLoginViewController.m */,
 				E6EDAA071767F77600D3558A /* SCLoginViewController.xib */,
@@ -220,6 +228,7 @@
 				E6EDAA041767F69300D3558A /* Icon@2x.png in Resources */,
 				E6EDAA091767F77600D3558A /* SCLoginViewController.xib in Resources */,
 				E6EDAA0E1767FD0E00D3558A /* SCViewController.xib in Resources */,
+				E6C2C8E61769A78C002300C4 /* SCMealViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -234,6 +243,7 @@
 				E6EDA9E31767E5DD00D3558A /* AppDelegate.m in Sources */,
 				E6EDAA081767F77600D3558A /* SCLoginViewController.m in Sources */,
 				E6EDAA0D1767FD0E00D3558A /* SCViewController.m in Sources */,
+				E6C2C8E51769A78C002300C4 /* SCMealViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
