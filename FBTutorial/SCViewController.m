@@ -7,8 +7,6 @@
 //
 
 #import "SCViewController.h"
-
-//Note import of AppDelegate to ???
 #import "AppDelegate.h"
 
 @interface SCViewController ()
@@ -17,19 +15,29 @@
 @property (weak, nonatomic) IBOutlet FBProfilePictureView *userProfileImage;
 @property (weak, nonatomic) IBOutlet UILabel *userNameLabel;
 @property (weak, nonatomic) IBOutlet UITableView *menuTableView;
+
+@property (strong, nonatomic) CLLocationManager *locationManager;
+
+//Create new instance of FBFriendPickerViewController
+@property (strong, nonatomic) FBFriendPickerViewController *friendPickerController;
 @property (strong, nonatomic) NSArray *selectedFriends;
 
-//Create new property using FB class for friend picker (subclass of UITableViewController)
-@property (strong, nonatomic) FBFriendPickerViewController *friendPickerController;
+//Create new instance of FBPlacePickerViewController
+@property (strong, nonatomic) FBPlacePickerViewController *placePickerController;
+@property (strong, nonatomic) NSObject<FBGraphPlace> *selectedPlace;
 
 @end
 
 @implementation SCViewController
 
+@synthesize menuTableView;
+@synthesize locationManager;
+
 @synthesize friendPickerController;
 @synthesize selectedFriends;
-@synthesize menuTableView;
 
+@synthesize placePickerController;
+@synthesize selectedPlace;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -45,6 +53,12 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
+    //Start location
+    locationManager = [[CLLocationManager alloc] init];
+    [locationManager setDelegate:self];
+    [locationManager setDesiredAccuracy:kCLLocationAccuracyNearestTenMeters];
+    [locationManager setDistanceFilter:50];
+    [locationManager startUpdatingLocation];
     
     //Add title to navigation toolbar
     [self setTitle:@"Scrumptious"];
@@ -61,8 +75,10 @@
     //Remove viewController from Notification Center
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     
-    //Kill friend picker
+    //Kill friend picker, place picker, and location manager
     [self setFriendPickerController: nil];
+    [self setPlacePickerController:nil];
+    [locationManager setDelegate:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -182,19 +198,44 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     switch ([indexPath row]) {
+        
+        case 1:
+            if (!placePickerController) {
+                placePickerController = [[FBPlacePickerViewController alloc] initWithNibName:nil bundle:nil];
+                [placePickerController setTitle:@"Select a restaurant"];
+                
+                //Set the place picker delegate
+                [placePickerController setDelegate:self];
+
+            }
+            
+            [placePickerController setLocationCoordinate:[[locationManager location] coordinate]];
+            [placePickerController setRadiusInMeters:1000];
+            [placePickerController setResultsLimit:50];
+            [placePickerController setSearchText:@"restaurant"];
+            
+            [placePickerController loadData];
+            [[self navigationController] pushViewController:placePickerController animated:YES];
+            
+            break;
+        
         case 2:
             if (!friendPickerController) {
                 friendPickerController = [[FBFriendPickerViewController alloc] initWithNibName:nil bundle:nil];
-                
-                //Set the friend picker delegate - custom FB
-                [friendPickerController setDelegate:self];
-                
                 [friendPickerController setTitle:@"Select Friends"];
+                
+                //Set the friend picker delegate
+                [friendPickerController setDelegate:self];
             }
             
             //loadData is a method that was overridden in FBFriendPickerViewController to load all friend data
             [friendPickerController loadData];
             [[self navigationController] pushViewController:friendPickerController animated:YES ];
+            
+            break;
+            
+        default:
+            break;
     }
 }
 
@@ -206,6 +247,20 @@
     
     //Call updateSelections method
     [self updateSelections];
+}
+
+//FB delegate method for picking a place - included in the FBPlacePickerViewController class
+- (void)placePickerViewControllerSelectionDidChange:(FBPlacePickerViewController *)placePicker
+{
+    //selection is a custom FB method to return the selected friends from the place picker
+    selectedPlace = [placePicker selection];
+    
+    //Call updateSelections method
+    [self updateSelections];
+    
+    if ([selectedPlace count] > 0) {
+        [[self navigationController] popViewControllerAnimated: YES];
+    }
 }
 
 - (void)updateSelections
@@ -227,6 +282,7 @@
         friendsSubtitle = [NSString stringWithFormat:@"%@ ", [friend name]];
     }
     
+    [self updateCellIndex:1 withSubtitle: selectedPlace ? [selectedPlace name] : @"Select One"];
     [self updateCellIndex:2 withSubtitle:friendsSubtitle];
     
 }
@@ -241,6 +297,30 @@
 - (void)dealloc
 {
     [friendPickerController setDelegate:nil];
+}
+
+//locationManager delegate methods
+
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
+{
+    CLLocation *newLocation = [locations lastObject];
+    NSLog(@"New location: %@", newLocation);
+    NSLog(@"got location: %f, %f", newLocation.coordinate.latitude, newLocation.coordinate.longitude);
+
+    /*
+    CLLocation *oldLocation = [locations objectAtIndex:[locations count] - 2];
+    
+    if (!oldLocation || (oldLocation.coordinate.latitude != newLocation.coordinate.latitude && oldLocation.coordinate.longitude != newLocation.coordinate.longitude)) {
+
+        NSLog(@"got location: %f, %f", newLocation.coordinate.latitude, newLocation.coordinate.longitude);
+    }
+     */
+
+}
+
+- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
+{
+    NSLog(@"%@", error);
 }
 
 @end
