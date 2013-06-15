@@ -418,7 +418,7 @@
 - (id<SCOGMeal>)mealObjectForMeal:(NSString *)meal
 {
     //Backend heroku URL
-    NSString * format = @"https://immense-atoll-7280.herokuapp.com/?fb:app_id=527383000662832&og:type=%@&og:title=%@&og:description=%@&&og:image=https://fbcdn-profile-a.akamaihd.net/hprofile-ak-prn1/c35.34.434.434/s160x160/19850_663333582023_942791_n.jpg&body=%@";
+    NSString * format = @"https://immense-atoll-7280.herokuapp.com/?fb:app_id=527383000662832&og:type=%@&og:title=%@&og:description=%@isdelicious&og:image=https://fbcdn-profile-a.akamaihd.net/hprofile-ak-prn1/c35.34.434.434/s160x160/19850_663333582023_942791_n.jpg&body=%@";
     
     //Creat a FBGraphObject and treat it as a SCOGMeal with typed properties
     id<SCOGMeal> result = (id<SCOGMeal>)[FBGraphObject graphObject];
@@ -435,6 +435,15 @@
 {
     FBRequestConnection *connection = [[FBRequestConnection alloc] init];
     
+    //Logging code
+    
+    NSLog(@"FBSession accesstokenData: %@", [[FBSession activeSession]accessTokenData]);
+    NSLog(@"===requestForUploadPhoto logging===");
+    [FBSettings setLoggingBehavior:[NSSet
+                                    setWithObjects:FBLoggingBehaviorFBRequests,
+                                    FBLoggingBehaviorFBURLConnections,
+                                    nil]];
+    
     //First request uploads the photo
     FBRequest *request1 = [FBRequest requestForUploadPhoto:selectedPhoto];
     [connection addRequest:request1 completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
@@ -444,6 +453,13 @@
     }
         batchEntryName:@"photopost"
     ];
+    
+    //Logging code
+    NSLog(@"===requestForGraphPath logging===");
+    [FBSettings setLoggingBehavior:[NSSet
+                                    setWithObjects:FBLoggingBehaviorFBRequests,
+                                    FBLoggingBehaviorFBURLConnections,
+                                    nil]];
     
     //Second request retrieves photo information for just-created photo so we can grab its source
     FBRequest *request2 = [FBRequest requestForGraphPath:@"{result=photopost:$.id}"];
@@ -465,7 +481,7 @@
     id<SCOGMeal> mealObject = [self mealObjectForMeal:selectedMeal];
     
     //Now create an Open Graph eat action with the meal, our location, and the people we were with.
-    id<SCOGeatMealAction> action = (id<SCOGeatMealAction>)[FBGraphObject graphObject];
+    id<SCOGetMealAction> action = (id<SCOGetMealAction>)[FBGraphObject graphObject];
     
     //Where is this coming from? Unclear where this is being defined in protocol file
     [action setMeal:mealObject];
@@ -492,6 +508,9 @@
     //Then create the request and post the action to the "me/<unicycleprototype:eat" path
     
     //Logging code
+    NSLog(@"FBSession accesstokenData: %@", [[FBSession activeSession]accessTokenData]);
+    NSLog(@"===requestForPostWithGraphPath logging===");
+
     [FBSettings setLoggingBehavior:[NSSet
                                     setWithObjects:FBLoggingBehaviorFBRequests,
                                     FBLoggingBehaviorFBURLConnections,
